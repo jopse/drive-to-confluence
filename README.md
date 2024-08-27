@@ -1,25 +1,34 @@
 # drive-to-confluence
 Migration from Drive to Clonfluence Cloud
 
-Pasos para configurar y ejecutar el script:
-Credenciales y configuración:
+## Pasos para configurar y ejecutar el script:
+### Credenciales y configuración:
+1. Crea el archivo config.ini:
+2. Usa el fichero de ejemplo proporcionado, ajustando los valores de las variables según tu configuración.
+   2.1. Reemplaza 'path_to_your_service_account.json' con la ruta a tu archivo de credenciales de Google Drive.
+   2.2. Sustituye 'your_email' y 'your_api_token' por tu correo electrónico y token de API de Confluence.
+   2.3. Configura los IDs de la carpeta de Google Drive (google_drive_folder_id), el espacio en Confluence (confluence_space), y el ID de la página padre en Confluence (confluence_parent_page_id).
+3. Coloca el archivo config.ini en el mismo directorio que el script.
 
-Reemplaza 'path_to_your_service_account.json' con la ruta a tu archivo de credenciales de Google Drive.
-Sustituye 'your_email' y 'your_api_token' por tu correo electrónico y token de API de Confluence.
-Configura los IDs de la carpeta de Google Drive (google_drive_folder_id), el espacio en Confluence (confluence_space), y el ID de la página padre en Confluence (confluence_parent_page_id).
-Instalación de dependencias: Asegúrate de tener instaladas las siguientes librerías:
-
-bash
+### Instalación de dependencias: Asegúrate de tener instaladas las siguientes librerías:
+``` bash
 pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client atlassian-python-api beautifulsoup4
-Ejecución: Ejecuta el script para iniciar la migración. Este exportará los documentos desde la carpeta de Google Drive, procesará los índices si existen, y creará las páginas correspondientes en Confluence con la estructura de subpáginas.
+```
 
-Notas adicionales:
-HTML Parsing: El análisis del índice se realiza con BeautifulSoup, un enfoque básico que puede requerir ajustes según la estructura del documento.
-Límites de la API: Asegúrate de manejar posibles errores de API y límites de tasa en producción.
-Soporte de archivos: Actualmente, solo los documentos de Google Docs son tratados para la exportación. Otros tipos de archivos se manejan como texto simple. Adapta el script según tus necesidades.
+## Ejecución
+```bash
+cd /ruta/al/directorio/del/script/
+python migrate_drive_to_confluence.py
+```
 
-Para obtener un archivo service_account.json de Google, necesitas crear una cuenta de servicio en Google Cloud Console. A continuación, te explico los pasos para hacerlo:
-
+## Notas adicionales:
+### HTML Parsing: 
+El análisis del índice se realiza con BeautifulSoup, un enfoque básico que puede requerir ajustes según la estructura del documento.
+### Límites de la API: 
+Asegúrate de manejar posibles errores de API y límites de tasa en producción.
+### Soporte de archivos:
+Actualmente, solo los documentos de Google Docs son tratados para la exportación. Otros tipos de archivos se manejan como texto simple. Adapta el script según tus necesidades.
+### Service account de Google
 1. Crear un Proyecto en Google Cloud Console
 Visita Google Cloud Console: Ve a Google Cloud Console.
 Crear un nuevo proyecto:
