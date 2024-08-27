@@ -1,12 +1,17 @@
+import configparser
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from atlassian import Confluence
 from bs4 import BeautifulSoup
 
+# Cargar configuración desde el archivo config.ini
+config = configparser.ConfigParser()
+config.read('config.ini')
+
 # Autenticación con Google Drive API
 def authenticate_google_drive():
     SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
-    SERVICE_ACCOUNT_FILE = 'path_to_your_service_account.json'
+    SERVICE_ACCOUNT_FILE = config['google']['service_account_file']
 
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
@@ -17,9 +22,9 @@ def authenticate_google_drive():
 # Autenticación con Confluence API
 def authenticate_confluence():
     confluence = Confluence(
-        url='https://your-confluence-instance.atlassian.net',
-        username='your_email',
-        password='your_api_token'
+        url=config['confluence']['url'],
+        username=config['confluence']['username'],
+        password=config['confluence']['api_token']
     )
     return confluence
 
@@ -102,10 +107,10 @@ if __name__ == "__main__":
     drive_service = authenticate_google_drive()
     confluence = authenticate_confluence()
 
-    # Configura los IDs y espacios necesarios
-    google_drive_folder_id = 'your_google_drive_folder_id'
-    confluence_space = 'your_confluence_space_key'
-    confluence_parent_page_id = 'your_confluence_parent_page_id'
+    # Configura los IDs y espacios necesarios desde config.ini
+    google_drive_folder_id = config['google']['drive_folder_id']
+    confluence_space = config['confluence']['space_key']
+    confluence_parent_page_id = config['confluence']['parent_page_id']
 
     # Obtén la estructura de la carpeta de Google Drive
     folder_structure = get_drive_folder_structure(drive_service, google_drive_folder_id)
